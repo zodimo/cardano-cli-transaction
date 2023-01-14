@@ -1,3 +1,5 @@
+import { Era, Network, NodeMode } from '@zodimo/cardano-cli-base';
+import { BuildOutput } from '../../src/command/build';
 import { Transaction } from '../../src/transaction';
 describe('cardano-cli transaction build', () => {
   /*
@@ -135,4 +137,47 @@ describe('cardano-cli transaction build', () => {
       ].join(' '),
     );
   });
+
+  //to cover all the era nodemode and output variations, maybe they should be manually tested?
+  it('era, nodeMode, cardano-mode, mainnet, tx-in, change-address ,out-file', () => {
+    const txIn = '12345#1';
+    const changeAddress = 'my-change-address';
+    //eras
+    [Era.allegra, Era.alonzo, Era.babbage, Era.byron].forEach((era) => {
+      //nodeModes
+      [NodeMode.byron(), NodeMode.cardano(), NodeMode.shelley()].forEach((nodeMode) => {
+        [Network.mainnet(), Network.testnetMagic(1)].forEach((network) => {
+          [
+            BuildOutput.outFile('my-out-file'),
+            BuildOutput.calculatePlutusScriptCost('file-to-save-script-cost'),
+          ].forEach((buildOutput) => {
+            expect(
+              Transaction.createWithCardanoCliBin()
+                .build((builder) =>
+                  builder
+                    .withEra(era)
+                    .withNodeMode(nodeMode)
+                    .withNetwork(network)
+                    .withTxIn((builder) => builder.withTxIn(txIn))
+                    .withChangeAddress(changeAddress)
+                    .withOutput(buildOutput),
+                )
+                .getCommand(),
+            ).toBe(
+              [
+                'cardano-cli transaction build',
+                `${era.toString()}`,
+                `${nodeMode.toString()}`,
+                `${network.toString()}`,
+                `--tx-in ${txIn}`,
+                `--change-address ${changeAddress}`,
+                `${buildOutput.toString()}`,
+              ].join(' '),
+            );
+          });
+        });
+      });
+    });
+  });
+
 });

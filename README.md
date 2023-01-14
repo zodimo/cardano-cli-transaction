@@ -39,7 +39,7 @@ Usage: cardano-cli transaction
 - [ ] transaction
   - [ ] build-raw
   - [ ] build
-  - [ ] sign
+  - [x] sign
   - [ ] witness
   - [ ] assemble
   - [ ] submit

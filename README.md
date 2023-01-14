@@ -42,7 +42,7 @@ Usage: cardano-cli transaction
   - [x] sign
   - [ ] witness
   - [ ] assemble
-  - [ ] submit
+  - [x] submit
   - [ ] policyid
   - [ ] calculate-min-fee
   - [ ] calculate-min-required-utxo

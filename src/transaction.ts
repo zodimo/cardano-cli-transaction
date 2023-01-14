@@ -1,6 +1,6 @@
 import { Builder } from '@zodimo/cardano-cli-base';
-import { assert } from 'console';
 import { Sign, SignOptions } from './command/sign';
+import { Submit, SubmitOptions } from './command/submit';
 
 export class Transaction {
   public readonly commandPrefix: string;
@@ -17,9 +17,15 @@ export class Transaction {
     throw new Error('Not yet implemented!');
   }
   // sign
-  sign(builder: Builder<SignOptions, SignOptions>): Sign {
-    assert(typeof builder == 'function');
-    return new Sign(this.commandPrefix, builder(new SignOptions()));
+  sign(builder: Builder<SignOptions, SignOptions>): Sign;
+  sign(options: SignOptions): Sign;
+  sign(value: SignOptions | Builder<SignOptions, SignOptions>): Sign {
+    if (typeof value !== 'function') {
+      return new Sign(this.commandPrefix, value);
+    }
+
+    const options = value(new SignOptions());
+    return this.sign(options);
   }
   // witness
   witness() {
@@ -30,8 +36,16 @@ export class Transaction {
     throw new Error('Not yet implemented!');
   }
   // submit
-  submit() {
-    throw new Error('Not yet implemented!');
+
+  submit(builder: Builder<SubmitOptions, SubmitOptions>): Submit;
+  submit(options: SubmitOptions): Submit;
+  submit(value: SubmitOptions | Builder<SubmitOptions, SubmitOptions>): Submit {
+    if (typeof value !== 'function') {
+      return new Submit(this.commandPrefix, value);
+    }
+
+    const options = value(new SubmitOptions());
+    return this.submit(options);
   }
   // policyid
   policyid() {

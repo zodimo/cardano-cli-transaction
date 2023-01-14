@@ -1,4 +1,5 @@
 import { Builder } from '@zodimo/cardano-cli-base';
+import { Build, BuildOptions } from './command/build';
 import { Sign, SignOptions } from './command/sign';
 import { Submit, SubmitOptions } from './command/submit';
 
@@ -13,10 +14,20 @@ export class Transaction {
   }
 
   // build
-  build() {
-    throw new Error('Not yet implemented!');
+
+  build(builder: Builder<BuildOptions, BuildOptions>): Sign;
+  build(options: BuildOptions): Sign;
+  build(value: BuildOptions | Builder<BuildOptions, BuildOptions>): Build {
+    if (typeof value !== 'function') {
+      return new Build(this.commandPrefix, value);
+    }
+
+    const options = value(new BuildOptions());
+    return this.build(options);
   }
+
   // sign
+
   sign(builder: Builder<SignOptions, SignOptions>): Sign;
   sign(options: SignOptions): Sign;
   sign(value: SignOptions | Builder<SignOptions, SignOptions>): Sign {

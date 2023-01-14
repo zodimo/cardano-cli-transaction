@@ -1,6 +1,6 @@
 {
   "name": "@zodimo/cardano-cli-transaction",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "cardano-cli transaction wrapper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,7 +10,8 @@
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "publish:npm": "npm run clean && npm run build && npm publish --access public",
+    "prepublish":"npm run format && npm run lint && npm run test",
+    "publish:npm": "npm run prepublish && npm run clean && npm run build && npm publish --access public",
     "clean": "tsc -b --clean"
   },
   "repository": {

@@ -1,5 +1,5 @@
 import { OutFile } from '@zodimo/cardano-cli-base';
-import { TxToSign, TxToSignOptions } from '../../src/command/sign';
+import { TxToSign } from '../../src/command/sign';
 import { Transaction } from '../../src/transaction';
 
 describe('cardano-cli transaction sign', () => {

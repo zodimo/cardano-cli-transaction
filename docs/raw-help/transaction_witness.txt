@@ -1,0 +1,17 @@
+Usage: cardano-cli transaction witness --tx-body-file FILE
+            --signing-key-file FILE
+            [--address STRING]
+            [--mainnet | --testnet-magic NATURAL]
+            --out-file FILE
+
+  Create a transaction witness
+
+Available options:
+  --tx-body-file FILE      Input filepath of the JSON TxBody.
+  --signing-key-file FILE  Filepath of the signing key to be used in witness
+                           construction.
+  --address STRING         Byron address (Base58-encoded).
+  --mainnet                Use the mainnet magic id.
+  --testnet-magic NATURAL  Specify a testnet magic id.
+  --out-file FILE          The output file.
+  -h,--help                Show this help text

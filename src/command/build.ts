@@ -12,6 +12,7 @@ import {
   StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
+import { MintParameter, MintParameterBuilder } from './buildParameters/mint-parameter';
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
 import { TxInParameter, TxInParameterBuilder } from './buildParameters/tx-in-parameter';
@@ -31,11 +32,13 @@ export class BuildOptions implements CommandOptions {
   private txTotalCollateral?: NumericCommandParameter;
   private txOuts: TxOutParameter[];
   private changeAddress?: StringCommandParameter;
+  private mints: MintParameter[];
   private output?: BuildOutput;
 
   constructor() {
     this.txIns = [];
     this.txOuts = [];
+    this.mints = [];
   }
 
   withEra(builder: Builder<EraBuilder, Era>): BuildOptions;
@@ -147,6 +150,18 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withMint(builder: Builder<MintParameterBuilder, MintParameter>): BuildOptions;
+  withMint(value: MintParameter): BuildOptions;
+  withMint(value: MintParameter | Builder<MintParameterBuilder, MintParameter>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.mints.push(value);
+      return this;
+    }
+
+    this.mints.push(value(new MintParameterBuilder()));
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -189,9 +204,13 @@ export class BuildOptions implements CommandOptions {
       output.push(this.txTotalCollateral.toString());
     }
 
+    this.txOuts.forEach((txOutParameter) => output.push(txOutParameter.toString()));
+
     if (this.changeAddress) {
       output.push(this.changeAddress.toString());
     }
+
+    this.mints.forEach((mintParameter) => output.push(mintParameter.toString()));
 
     if (this.output) {
       output.push(this.output.toString());

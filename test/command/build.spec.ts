@@ -1,4 +1,4 @@
-import { Era, EraBuilder, Network, NetworkBuilder, NodeMode, NodeModeBuilder } from '@zodimo/cardano-cli-base';
+import { Era, Network, NodeMode } from '@zodimo/cardano-cli-base';
 import { Build, BuildOptions } from '../../src/command/build';
 import { BuildOutput } from '../../src/command/buildParameters/build-output';
 import { Transaction } from '../../src/transaction';
@@ -6,8 +6,6 @@ describe('cardano-cli transaction build', () => {
   it('commandName', () => {
     expect(new Build('cardano-cli', new BuildOptions()).getCommandName()).toBe('build');
   });
-  
-
 
   it('mainnet, tx-in, change-address ,out-file', () => {
     const txIn = '12345#1';

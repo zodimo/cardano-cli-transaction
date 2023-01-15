@@ -15,6 +15,7 @@ import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output'
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
 import { TxInParameter, TxInParameterBuilder } from './buildParameters/tx-in-parameter';
+import { TxOutParameter, TxOutParameterBuilder } from './buildParameters/tx-out-parameter';
 
 export class BuildOptions implements CommandOptions {
   private era?: Era;
@@ -28,11 +29,13 @@ export class BuildOptions implements CommandOptions {
   private txInCollateral?: StringCommandParameter;
   private txOutReturnCollateral?: StringCommandParameter;
   private txTotalCollateral?: NumericCommandParameter;
+  private txOuts: TxOutParameter[];
   private changeAddress?: StringCommandParameter;
   private output?: BuildOutput;
 
   constructor() {
     this.txIns = [];
+    this.txOuts = [];
   }
 
   withEra(builder: Builder<EraBuilder, Era>): BuildOptions;
@@ -128,6 +131,17 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withTxOut(builder: Builder<TxOutParameterBuilder, TxOutParameter>): BuildOptions;
+  withTxOut(value: TxOutParameter): BuildOptions;
+  withTxOut(value: TxOutParameter | Builder<TxOutParameterBuilder, TxOutParameter>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.txOuts.push(value);
+      return this;
+    }
+
+    this.txOuts.push(value(new TxOutParameterBuilder()));
+    return this;
+  }
   withChangeAddress(value: string): BuildOptions {
     this.changeAddress = StringCommandParameter.from('change-address', value);
     return this;

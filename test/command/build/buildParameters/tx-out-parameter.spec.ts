@@ -33,7 +33,7 @@ describe('tx-out-parameter', () => {
     });
   });
 
-  it('tx-out', () => {
+  it('tx-out tx-out-reference-script-file', () => {
     const txOut = 'some-tx-out';
     const referenceScriptFile = 'some-reference-script-file';
     expect(TxOutParameter.fromTxOut(txOut).withReferenceScriptFile(referenceScriptFile).toString()).toBe(

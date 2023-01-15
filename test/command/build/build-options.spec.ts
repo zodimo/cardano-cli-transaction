@@ -3,6 +3,7 @@ import { BuildOptions } from '../../../src/command/build';
 import { ScriptValidBuilder } from '../../../src/command/buildParameters/script-valid';
 import { TxInParameterBuilder } from '../../../src/command/buildParameters/tx-in-parameter';
 import { RequiredSignerBuilder } from '../../../src/command/buildParameters/required-signer';
+import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-out-parameter';
 
 describe('build-options', () => {
   /*
@@ -180,24 +181,32 @@ describe('build-options', () => {
     });
   });
 
-  it('--tx-in-collateral TX-IN', () => {
+  it('tx-in-collateral TX-IN', () => {
     const txInCollateral = '123456789#1';
     expect(new BuildOptions().withTxInCollateral(txInCollateral).toString()).toBe(
       `--tx-in-collateral ${txInCollateral}`,
     );
   });
 
-  it('--tx-out-return-collateral ADDRESS VALUE', () => {
+  it('tx-out-return-collateral ADDRESS VALUE', () => {
     const txOutReturnCollateral = 'address-value';
     expect(new BuildOptions().withTxOutReturnCollateral(txOutReturnCollateral).toString()).toBe(
       `--tx-out-return-collateral ${txOutReturnCollateral}`,
     );
   });
 
-  it('--tx-total-collateral INTEGER', () => {
+  it('tx-total-collateral INTEGER', () => {
     const txTotalCollateral = 100;
     expect(new BuildOptions().withTxTotalCollateral(txTotalCollateral).toString()).toBe(
       `--tx-total-collateral ${txTotalCollateral}`,
     );
+  });
+
+  it('tx-out', () => {
+    new BuildOptions().withTxOut((builder) => {
+      expect(builder).toBeInstanceOf(TxOutParameterBuilder);
+      //return it not tested
+      return builder.withTxOut('not-important');
+    });
   });
 });

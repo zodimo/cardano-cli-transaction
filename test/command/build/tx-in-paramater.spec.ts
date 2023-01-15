@@ -1,5 +1,4 @@
-import { TxInParameter } from '../../../src/command/build';
-
+import { TxInParameter } from '../../../src/command/buildParameters/tx-in-parameter';
 describe('tx-in-parameter', () => {
   /*
     (

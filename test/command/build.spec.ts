@@ -1,5 +1,5 @@
 import { Era, Network, NodeMode } from '@zodimo/cardano-cli-base';
-import { BuildOutput } from '../../src/command/build';
+import { BuildOutput } from '../../src/command/buildParameters/build-output';
 import { Transaction } from '../../src/transaction';
 describe('cardano-cli transaction build', () => {
   /*

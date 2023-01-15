@@ -4,6 +4,7 @@ import { ScriptValidBuilder } from '../../../src/command/buildParameters/script-
 import { TxInParameterBuilder } from '../../../src/command/buildParameters/tx-in-parameter';
 import { RequiredSignerBuilder } from '../../../src/command/buildParameters/required-signer';
 import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-out-parameter';
+import { MintParameterBuilder } from '../../../src/command/buildParameters/mint-parameter';
 
 describe('build-options', () => {
   /*
@@ -207,6 +208,19 @@ describe('build-options', () => {
       expect(builder).toBeInstanceOf(TxOutParameterBuilder);
       //return it not tested
       return builder.withTxOut('not-important');
+    });
+  });
+
+  it('change-address ADDRESS', () => {
+    const changeAddress = 'some-address';
+    expect(new BuildOptions().withChangeAddress(changeAddress).toString()).toBe(`--change-address ${changeAddress}`);
+  });
+
+  it('mint', () => {
+    new BuildOptions().withMint((builder) => {
+      expect(builder).toBeInstanceOf(MintParameterBuilder);
+      //return it not tested
+      return builder.withMint('not-important');
     });
   });
 });

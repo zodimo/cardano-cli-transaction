@@ -11,7 +11,7 @@ import {
 export class SubmitOptions {
   private nodeMode?: NodeMode;
   private network?: Network;
-  txFile?: StringCommandParameter;
+  private txFile?: StringCommandParameter;
 
   withNodeMode(builder: Builder<NodeModeBuilder, NodeMode>): SubmitOptions;
   withNodeMode(value: NodeMode): SubmitOptions;

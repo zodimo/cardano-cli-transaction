@@ -18,9 +18,9 @@ export class BuildOutput extends StringCommandParameter {
     super(paramKey, paramValue);
   }
   static outFile(value: string): BuildOutput {
-    return BuildOutput.from(BuildOutputTypes.OUT_FILE, value);
+    return new BuildOutput(BuildOutputTypes.OUT_FILE, value);
   }
   static calculatePlutusScriptCost(value: string): BuildOutput {
-    return BuildOutput.from(BuildOutputTypes.CALCULATE_PLUTUS_SCRIPT_COST, value);
+    return new BuildOutput(BuildOutputTypes.CALCULATE_PLUTUS_SCRIPT_COST, value);
   }
 }

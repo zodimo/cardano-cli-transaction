@@ -18,10 +18,10 @@ export class RequiredSigner extends StringCommandParameter {
     super(paramKey, paramValue);
   }
   static file(value: string) {
-    return RequiredSigner.from(RequiredSignerOptions.FILE, value);
+    return new RequiredSigner(RequiredSignerOptions.FILE, value);
   }
 
   static hash(value: string) {
-    return RequiredSigner.from(RequiredSignerOptions.HASH, value);
+    return new RequiredSigner(RequiredSignerOptions.HASH, value);
   }
 }

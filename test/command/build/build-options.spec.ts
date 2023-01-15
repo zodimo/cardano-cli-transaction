@@ -193,4 +193,11 @@ describe('build-options', () => {
       `--tx-out-return-collateral ${txOutReturnCollateral}`,
     );
   });
+
+  it('--tx-total-collateral INTEGER', () => {
+    const txTotalCollateral = 100;
+    expect(new BuildOptions().withTxTotalCollateral(txTotalCollateral).toString()).toBe(
+      `--tx-total-collateral ${txTotalCollateral}`,
+    );
+  });
 });

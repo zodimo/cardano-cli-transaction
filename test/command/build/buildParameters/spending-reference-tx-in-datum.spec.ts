@@ -13,8 +13,6 @@ describe('spending-reference-tx-in-datum', () => {
   )
   */
 
-  const txIn = '12345#1';
-
   it('--spending-reference-tx-in-datum-cbor-file CBOR FILE', () => {
     const cborFile = 'my-cbor-file';
     expect(SpendingReferenceTxInDatum.cborFile(cborFile).toString()).toBe(

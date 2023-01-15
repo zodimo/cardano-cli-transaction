@@ -5,6 +5,7 @@ import { TxInParameterBuilder } from '../../../src/command/buildParameters/tx-in
 import { RequiredSignerBuilder } from '../../../src/command/buildParameters/required-signer';
 import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-out-parameter';
 import { MintParameterBuilder } from '../../../src/command/buildParameters/mint-parameter';
+import { CertificateFileBuilder } from '../../../src/command/buildParameters/certificate-file';
 
 describe('build-options', () => {
   /*
@@ -235,5 +236,13 @@ describe('build-options', () => {
     expect(new BuildOptions().withInvalidHereafter(invalidHereafterSlot).toString()).toBe(
       `--invalid-hereafter ${invalidHereafterSlot}`,
     );
+  });
+
+  it('certificate-file', () => {
+    new BuildOptions().withCertificateFile((builder) => {
+      expect(builder).toBeInstanceOf(CertificateFileBuilder);
+      //return it not tested
+      return builder.withCertificateFile('not-important');
+    });
   });
 });

@@ -12,6 +12,7 @@ import {
   StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
+import { CertificateFile, CertificateFileBuilder } from './buildParameters/certificate-file';
 import { MintParameter, MintParameterBuilder } from './buildParameters/mint-parameter';
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
@@ -35,6 +36,7 @@ export class BuildOptions implements CommandOptions {
   private mints: MintParameter[];
   private invalidBefore?: NumericCommandParameter;
   private invalidHereafter?: NumericCommandParameter;
+  private certificateFile?: CertificateFile;
 
   private output?: BuildOutput;
 
@@ -175,6 +177,18 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withCertificateFile(builder: Builder<CertificateFileBuilder, CertificateFile>): BuildOptions;
+  withCertificateFile(value: CertificateFile): BuildOptions;
+  withCertificateFile(value: CertificateFile | Builder<CertificateFileBuilder, CertificateFile>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.certificateFile = value;
+      return this;
+    }
+
+    this.certificateFile = value(new CertificateFileBuilder());
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -231,6 +245,10 @@ export class BuildOptions implements CommandOptions {
 
     if (this.invalidHereafter) {
       output.push(this.invalidHereafter.toString());
+    }
+
+    if (this.certificateFile) {
+      output.push(this.certificateFile.toString());
     }
 
     if (this.output) {

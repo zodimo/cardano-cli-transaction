@@ -1,3 +1,4 @@
+import { Network, NodeMode } from '@zodimo/cardano-cli-base';
 import { Transaction } from '../../src/transaction';
 
 describe('cardano-cli transaction sumit', () => {
@@ -17,6 +18,12 @@ describe('cardano-cli transaction sumit', () => {
         .submit((builder) => builder.withNetwork((builder) => builder.mainnet()).withTxFile(txFile))
         .getCommand(),
     ).toBe(['cardano-cli transaction submit', '--mainnet', `--tx-file ${txFile}`].join(' '));
+    //network direct
+    expect(
+      Transaction.createWithCardanoCliBin()
+        .submit((builder) => builder.withNetwork(Network.mainnet()).withTxFile(txFile))
+        .getCommand(),
+    ).toBe(['cardano-cli transaction submit', '--mainnet', `--tx-file ${txFile}`].join(' '));
   });
   it('shelley-mode, mainnet and tx-file', () => {
     const txFile = 'my-tx-file';
@@ -25,6 +32,17 @@ describe('cardano-cli transaction sumit', () => {
         .submit((builder) =>
           builder
             .withNodeMode((builder) => builder.shelley())
+            .withNetwork((builder) => builder.mainnet())
+            .withTxFile(txFile),
+        )
+        .getCommand(),
+    ).toBe(['cardano-cli transaction submit', '--shelley-mode', '--mainnet', `--tx-file ${txFile}`].join(' '));
+    //direct on nodeMode
+    expect(
+      Transaction.createWithCardanoCliBin()
+        .submit((builder) =>
+          builder
+            .withNodeMode(NodeMode.shelley())
             .withNetwork((builder) => builder.mainnet())
             .withTxFile(txFile),
         )

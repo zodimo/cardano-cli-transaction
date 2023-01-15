@@ -25,6 +25,6 @@ export class SpendingReferenceTxInRedeemer extends CompositeCommandParameter {
   }
   static jsonValue(value: string): SpendingReferenceTxInRedeemer {
     const param = 'spending-reference-tx-in-redeemer-value';
-    return SpendingReferenceTxInRedeemer.from(StringCommandParameter.from(param, value));
+    return SpendingReferenceTxInRedeemer.from(StringCommandParameter.from(param, value, true));
   }
 }

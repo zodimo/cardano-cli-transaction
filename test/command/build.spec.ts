@@ -179,5 +179,4 @@ describe('cardano-cli transaction build', () => {
       });
     });
   });
-
 });

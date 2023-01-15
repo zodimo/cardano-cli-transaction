@@ -19,9 +19,9 @@ export class ScriptValid extends BooleanCommandParameter {
     super(paramKey);
   }
   static isValid(): ScriptValid {
-    return ScriptValid.from(ScriptValidOptions.IS_VALID);
+    return new ScriptValid(ScriptValidOptions.IS_VALID);
   }
   static isInvalid(): ScriptValid {
-    return ScriptValid.from(ScriptValidOptions.IS_INVALID);
+    return new ScriptValid(ScriptValidOptions.IS_INVALID);
   }
 }

@@ -1,4 +1,4 @@
-import { TxOutParameter } from '../../../../src/command/buildParameters/tx-out-parameter';
+import { TxOutParameter, TxOutParameterBuilder } from '../../../../src/command/buildParameters/tx-out-parameter';
 import { TxOutDatumBuilder } from '../../../../src/command/buildParameters/tx-out/tx-out-datum';
 
 describe('tx-out-parameter', () => {
@@ -22,6 +22,7 @@ describe('tx-out-parameter', () => {
   it('tx-out', () => {
     const txOut = 'some-tx-out';
     expect(TxOutParameter.fromTxOut(txOut).toString()).toBe(`--tx-out ${txOut}`);
+    expect(new TxOutParameterBuilder().withTxOut(txOut).toString()).toBe(`--tx-out ${txOut}`);
   });
 
   it('tx-out datum', () => {

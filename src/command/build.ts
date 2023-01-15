@@ -11,13 +11,19 @@ import {
   StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
+import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
+import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
 import { TxInParameter, TxInParameterBuilder } from './buildParameters/tx-in-parameter';
 
 export class BuildOptions implements CommandOptions {
   private era?: Era;
   private nodeMode?: NodeMode;
   private network?: Network;
+  private scriptValid?: ScriptValid;
+  private witnessOverride?: StringCommandParameter;
   private txIns: TxInParameter[];
+  private readOnlyTxInReference?: StringCommandParameter;
+  private requiredSigner?: RequiredSigner;
   private changeAddress?: StringCommandParameter;
   private output?: BuildOutput;
 
@@ -59,6 +65,23 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withScriptValid(builder: Builder<ScriptValidBuilder, ScriptValid>): BuildOptions;
+  withScriptValid(value: ScriptValid): BuildOptions;
+  withScriptValid(value: ScriptValid | Builder<ScriptValidBuilder, ScriptValid>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.scriptValid = value;
+      return this;
+    }
+
+    this.scriptValid = value(new ScriptValidBuilder());
+    return this;
+  }
+
+  withWitnessOverride(value: string): BuildOptions {
+    this.witnessOverride = StringCommandParameter.from('witness-override', value);
+    return this;
+  }
+
   withTxIn(builder: Builder<TxInParameterBuilder, TxInParameter>): BuildOptions;
   withTxIn(value: TxInParameter): BuildOptions;
   withTxIn(value: TxInParameter | Builder<TxInParameterBuilder, TxInParameter>): BuildOptions {
@@ -67,6 +90,23 @@ export class BuildOptions implements CommandOptions {
       return this;
     }
     this.txIns.push(value(new TxInParameterBuilder()));
+    return this;
+  }
+
+  withReadOnlyTxInReference(value: string): BuildOptions {
+    this.readOnlyTxInReference = StringCommandParameter.from('read-only-tx-in-reference', value);
+    return this;
+  }
+
+  withRequiredSigner(builder: Builder<RequiredSignerBuilder, RequiredSigner>): BuildOptions;
+  withRequiredSigner(value: RequiredSigner): BuildOptions;
+  withRequiredSigner(value: RequiredSigner | Builder<RequiredSignerBuilder, RequiredSigner>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.requiredSigner = value;
+      return this;
+    }
+
+    this.requiredSigner = value(new RequiredSignerBuilder());
     return this;
   }
 
@@ -98,8 +138,15 @@ export class BuildOptions implements CommandOptions {
     if (this.network) {
       output.push(this.network.toString());
     }
+    if (this.witnessOverride) {
+      output.push(this.witnessOverride.toString());
+    }
 
     this.txIns.forEach((txInParameter) => output.push(txInParameter.toString()));
+
+    if (this.readOnlyTxInReference) {
+      output.push(this.readOnlyTxInReference.toString());
+    }
 
     if (this.changeAddress) {
       output.push(this.changeAddress.toString());

@@ -1,0 +1,182 @@
+import { EraBuilder, NetworkBuilder, NodeModeBuilder } from '@zodimo/cardano-cli-base';
+import { BuildOptions } from '../../../src/command/build';
+import { ScriptValidBuilder } from '../../../src/command/buildParameters/script-valid';
+import { TxInParameterBuilder } from '../../../src/command/buildParameters/tx-in-parameter';
+import { RequiredSignerBuilder } from '../../../src/command/buildParameters/required-signer';
+
+describe('build-options', () => {
+  /*
+    Usage: cardano-cli transaction build 
+    [ --byron-era
+    | --shelley-era
+    | --allegra-era
+    | --mary-era
+    | --alonzo-era
+    | --babbage-era
+    ]
+    [ --shelley-mode
+    | --byron-mode [--epoch-slots NATURAL]
+    | --cardano-mode [--epoch-slots NATURAL]
+    ]
+    (--mainnet | --testnet-magic NATURAL)
+    [--script-valid | --script-invalid]
+    [--witness-override WORD]
+    // note on --tx-in one or more
+    (--tx-in TX-IN
+      [ --spending-tx-in-reference TX-IN
+        --spending-plutus-script-v2
+        ( --spending-reference-tx-in-datum-cbor-file CBOR FILE
+        | --spending-reference-tx-in-datum-file JSON FILE
+        | --spending-reference-tx-in-datum-value JSON VALUE
+        | --spending-reference-tx-in-inline-datum-present
+        )
+        ( --spending-reference-tx-in-redeemer-cbor-file CBOR FILE
+        | --spending-reference-tx-in-redeemer-file JSON FILE
+        | --spending-reference-tx-in-redeemer-value JSON VALUE
+        )
+      | --simple-script-tx-in-reference TX-IN
+      | --tx-in-script-file FILE
+        [
+          ( --tx-in-datum-cbor-file CBOR FILE
+          | --tx-in-datum-file JSON FILE
+          | --tx-in-datum-value JSON VALUE
+          | --tx-in-inline-datum-present
+          )
+          ( --tx-in-redeemer-cbor-file CBOR FILE
+          | --tx-in-redeemer-file JSON FILE
+          | --tx-in-redeemer-value JSON VALUE
+          )]
+      ])
+    [--read-only-tx-in-reference TX-IN]
+    [--required-signer FILE | --required-signer-hash HASH]
+    [--tx-in-collateral TX-IN]
+    [--tx-out-return-collateral ADDRESS VALUE]
+    [--tx-total-collateral INTEGER]
+    [--tx-out ADDRESS VALUE
+      [ --tx-out-datum-hash HASH
+      | --tx-out-datum-hash-cbor-file CBOR FILE
+      | --tx-out-datum-hash-file JSON FILE
+      | --tx-out-datum-hash-value JSON VALUE
+      | --tx-out-datum-embed-cbor-file CBOR FILE
+      | --tx-out-datum-embed-file JSON FILE
+      | --tx-out-datum-embed-value JSON VALUE
+      | --tx-out-inline-datum-cbor-file CBOR FILE
+      | --tx-out-inline-datum-file JSON FILE
+      | --tx-out-inline-datum-value JSON VALUE
+      ]
+      [--tx-out-reference-script-file FILE]]
+    --change-address ADDRESS
+    [--mint VALUE
+      ( --mint-script-file FILE
+        [ --mint-redeemer-cbor-file CBOR FILE
+        | --mint-redeemer-file JSON FILE
+        | --mint-redeemer-value JSON VALUE
+        ]
+      | --simple-minting-script-tx-in-reference TX-IN --policy-id HASH
+      | --mint-tx-in-reference TX-IN
+        --mint-plutus-script-v2
+        ( --mint-reference-tx-in-redeemer-cbor-file CBOR FILE
+        | --mint-reference-tx-in-redeemer-file JSON FILE
+        | --mint-reference-tx-in-redeemer-value JSON VALUE
+        )
+        --policy-id HASH
+      )]
+    [--invalid-before SLOT]
+    [--invalid-hereafter SLOT]
+    [--certificate-file CERTIFICATEFILE
+      [ --certificate-script-file FILE
+        [ --certificate-redeemer-cbor-file CBOR FILE
+        | --certificate-redeemer-file JSON FILE
+        | --certificate-redeemer-value JSON VALUE
+        ]
+      | --certificate-tx-in-reference TX-IN
+        --certificate-plutus-script-v2
+        ( --certificate-reference-tx-in-redeemer-cbor-file CBOR FILE
+        | --certificate-reference-tx-in-redeemer-file JSON FILE
+        | --certificate-reference-tx-in-redeemer-value JSON VALUE
+        )
+      ]]
+    [--withdrawal WITHDRAWAL
+      [ --withdrawal-script-file FILE
+        [ --withdrawal-redeemer-cbor-file CBOR FILE
+        | --withdrawal-redeemer-file JSON FILE
+        | --withdrawal-redeemer-value JSON VALUE
+        ]
+      | --withdrawal-tx-in-reference TX-IN
+        --withdrawal-plutus-script-v2
+        ( --withdrawal-reference-tx-in-redeemer-cbor-file CBOR FILE
+        | --withdrawal-reference-tx-in-redeemer-file JSON FILE
+        | --withdrawal-reference-tx-in-redeemer-value JSON VALUE
+        )
+      ]]
+    [--json-metadata-no-schema | --json-metadata-detailed-schema]
+    [--auxiliary-script-file FILE]
+    [--metadata-json-file FILE | --metadata-cbor-file FILE]
+    [--genesis FILE | --protocol-params-file FILE]
+    [--update-proposal-file FILE]
+    (--out-file FILE | --calculate-plutus-script-cost FILE)
+  */
+
+  it('era', () => {
+    new BuildOptions().withEra((builder) => {
+      expect(builder).toBeInstanceOf(EraBuilder);
+      //return it not tested
+      return builder.babbage;
+    });
+  });
+
+  it('node-mode', () => {
+    new BuildOptions().withNodeMode((builder) => {
+      expect(builder).toBeInstanceOf(NodeModeBuilder);
+      //return it not tested
+      return builder.cardano();
+    });
+  });
+  it('network', () => {
+    new BuildOptions().withNetwork((builder) => {
+      expect(builder).toBeInstanceOf(NetworkBuilder);
+      //return it not tested
+      return builder.mainnet();
+    });
+  });
+
+  it('script-valid', () => {
+    // [--script-valid | --script-invalid]
+    new BuildOptions().withScriptValid((builder) => {
+      expect(builder).toBeInstanceOf(ScriptValidBuilder);
+      //return it not tested
+      return builder.isValid();
+    });
+  });
+
+  it('witness-override', () => {
+    const witnessOverrideWord = 'some override';
+    expect(new BuildOptions().withWitnessOverride(witnessOverrideWord).toString()).toBe(
+      `--witness-override ${witnessOverrideWord}`,
+    );
+  });
+
+  it('tx-in', () => {
+    new BuildOptions().withTxIn((builder) => {
+      expect(builder).toBeInstanceOf(TxInParameterBuilder);
+      //return it not tested
+      return builder.withTxIn('not tested');
+    });
+  });
+
+  it('read-only-tx-in-reference', () => {
+    const readOnlyTxInReference = '123456789#1';
+    expect(new BuildOptions().withReadOnlyTxInReference(readOnlyTxInReference).toString()).toBe(
+      `--read-only-tx-in-reference ${readOnlyTxInReference}`,
+    );
+  });
+
+  it('required-signer', () => {
+    // [--required-signer FILE | --required-signer-hash HASH]
+    new BuildOptions().withRequiredSigner((builder) => {
+      expect(builder).toBeInstanceOf(RequiredSignerBuilder);
+      //return it not tested
+      return builder.hash('not-important');
+    });
+  });
+});

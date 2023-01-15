@@ -179,4 +179,11 @@ describe('build-options', () => {
       return builder.hash('not-important');
     });
   });
+
+  it('--tx-in-collateral TX-IN]', () => {
+    const txInCollateral = '123456789#1';
+    expect(new BuildOptions().withTxInCollateral(txInCollateral).toString()).toBe(
+      `--tx-in-collateral ${txInCollateral}`,
+    );
+  });
 });

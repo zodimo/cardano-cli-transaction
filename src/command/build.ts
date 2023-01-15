@@ -24,6 +24,7 @@ export class BuildOptions implements CommandOptions {
   private txIns: TxInParameter[];
   private readOnlyTxInReference?: StringCommandParameter;
   private requiredSigner?: RequiredSigner;
+  private txInCollateral?: StringCommandParameter;
   private changeAddress?: StringCommandParameter;
   private output?: BuildOutput;
 
@@ -110,6 +111,11 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withTxInCollateral(value: string): BuildOptions {
+    this.txInCollateral = StringCommandParameter.from('tx-in-collateral', value);
+    return this;
+  }
+
   withChangeAddress(value: string): BuildOptions {
     this.changeAddress = StringCommandParameter.from('change-address', value);
     return this;
@@ -146,6 +152,9 @@ export class BuildOptions implements CommandOptions {
 
     if (this.readOnlyTxInReference) {
       output.push(this.readOnlyTxInReference.toString());
+    }
+    if (this.txInCollateral) {
+      output.push(this.txInCollateral.toString());
     }
 
     if (this.changeAddress) {

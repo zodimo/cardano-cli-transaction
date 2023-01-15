@@ -1,4 +1,4 @@
-import { MintParameter } from '../../../../src/command/buildParameters/mint-parameter';
+import { MintParameter, MintParameterBuilder } from '../../../../src/command/buildParameters/mint-parameter';
 import { MintScriptFileBuilder } from '../../../../src/command/buildParameters/mint/mint-script-file';
 import { MintTxInReferenceBuilder } from '../../../../src/command/buildParameters/mint/mint-tx-in-reference';
 import { SimpleMintingScriptBuilder } from '../../../../src/command/buildParameters/mint/simple-minting-script';
@@ -27,6 +27,7 @@ describe('mint-parameter', () => {
   it('mint', () => {
     const mint = 'some-tx-out';
     expect(MintParameter.fromMint(mint).toString()).toBe(`--mint ${mint}`);
+    expect(new MintParameterBuilder().withMint(mint).toString()).toBe(`--mint ${mint}`);
   });
 
   it('mint mint-script-file', () => {

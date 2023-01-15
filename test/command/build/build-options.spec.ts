@@ -223,4 +223,17 @@ describe('build-options', () => {
       return builder.withMint('not-important');
     });
   });
+
+  it('invalid-before SLOT', () => {
+    const invalidBeforeSlot = 10;
+    expect(new BuildOptions().withInvalidBefore(invalidBeforeSlot).toString()).toBe(
+      `--invalid-before ${invalidBeforeSlot}`,
+    );
+  });
+  it('invalid-hereafter SLOT', () => {
+    const invalidHereafterSlot = 10;
+    expect(new BuildOptions().withInvalidHereafter(invalidHereafterSlot).toString()).toBe(
+      `--invalid-hereafter ${invalidHereafterSlot}`,
+    );
+  });
 });

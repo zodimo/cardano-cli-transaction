@@ -33,6 +33,9 @@ export class BuildOptions implements CommandOptions {
   private txOuts: TxOutParameter[];
   private changeAddress?: StringCommandParameter;
   private mints: MintParameter[];
+  private invalidBefore?: NumericCommandParameter;
+  private invalidHereafter?: NumericCommandParameter;
+
   private output?: BuildOutput;
 
   constructor() {
@@ -162,6 +165,16 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withInvalidBefore(value: number): BuildOptions {
+    this.invalidBefore = NumericCommandParameter.from('invalid-before', value);
+    return this;
+  }
+
+  withInvalidHereafter(value: number): BuildOptions {
+    this.invalidHereafter = NumericCommandParameter.from('invalid-hereafter', value);
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -211,6 +224,14 @@ export class BuildOptions implements CommandOptions {
     }
 
     this.mints.forEach((mintParameter) => output.push(mintParameter.toString()));
+
+    if (this.invalidBefore) {
+      output.push(this.invalidBefore.toString());
+    }
+
+    if (this.invalidHereafter) {
+      output.push(this.invalidHereafter.toString());
+    }
 
     if (this.output) {
       output.push(this.output.toString());

@@ -180,10 +180,17 @@ describe('build-options', () => {
     });
   });
 
-  it('--tx-in-collateral TX-IN]', () => {
+  it('--tx-in-collateral TX-IN', () => {
     const txInCollateral = '123456789#1';
     expect(new BuildOptions().withTxInCollateral(txInCollateral).toString()).toBe(
       `--tx-in-collateral ${txInCollateral}`,
+    );
+  });
+
+  it('--tx-out-return-collateral ADDRESS VALUE', () => {
+    const txOutReturnCollateral = 'address-value';
+    expect(new BuildOptions().withTxOutReturnCollateral(txOutReturnCollateral).toString()).toBe(
+      `--tx-out-return-collateral ${txOutReturnCollateral}`,
     );
   });
 });

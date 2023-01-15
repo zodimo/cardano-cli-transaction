@@ -1,6 +1,6 @@
-import { TxInParameter } from '../../../../src/command/buildParameters/tx-in-parameter';
-import { TxInScript } from '../../../../src/command/buildParameters/tx-in-script';
-import { TxInSpending } from '../../../../src/command/buildParameters/tx-in-spending';
+import { TxInParameter } from '../../../../../src/command/buildParameters/tx-in-parameter';
+import { TxInScript } from '../../../../../src/command/buildParameters/tx-in/tx-in-script';
+import { TxInSpending } from '../../../../../src/command/buildParameters/tx-in/tx-in-spending';
 
 describe('tx-in-alternative', () => {
   const txIn = '12345#1';

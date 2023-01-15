@@ -1,4 +1,7 @@
-import { TxInScriptDatum, TxInScriptDatumBuilder } from '../../../../src/command/buildParameters/tx-in-script-datum';
+import {
+  TxInScriptDatum,
+  TxInScriptDatumBuilder,
+} from '../../../../../src/command/buildParameters/tx-in/tx-in-script-datum';
 
 describe('tx-in-script-datum', () => {
   /* 

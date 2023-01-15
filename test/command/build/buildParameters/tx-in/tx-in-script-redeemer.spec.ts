@@ -1,7 +1,7 @@
 import {
   TxInScriptRedeemer,
   TxInScriptRedeemerBuilder,
-} from '../../../../src/command/buildParameters/tx-in-script-redeemer';
+} from '../../../../../src/command/buildParameters/tx-in/tx-in-script-redeemer';
 
 describe('tx-in-script-redeemer', () => {
   /* 

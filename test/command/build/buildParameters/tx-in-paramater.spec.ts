@@ -1,5 +1,5 @@
-import { TxInAlternativeBuilder } from '../../../src/command/buildParameters/tx-in-alternative';
-import { TxInParameter, TxInParameterBuilder } from '../../../src/command/buildParameters/tx-in-parameter';
+import { TxInAlternativeBuilder } from '../../../../src/command/buildParameters/tx-in/tx-in-alternative';
+import { TxInParameter, TxInParameterBuilder } from '../../../../src/command/buildParameters/tx-in-parameter';
 describe('tx-in-parameter', () => {
   /*
     (

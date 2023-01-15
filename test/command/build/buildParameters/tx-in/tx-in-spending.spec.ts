@@ -1,6 +1,6 @@
-import { SpendingReferenceTxInDatumBuilder } from '../../../../src/command/buildParameters/spending-reference-tx-in-datum';
-import { SpendingReferenceTxInRedeemerBuilder } from '../../../../src/command/buildParameters/spending-reference-tx-in-redeemer';
-import { TxInSpending } from '../../../../src/command/buildParameters/tx-in-spending';
+import { SpendingReferenceTxInDatumBuilder } from '../../../../../src/command/buildParameters/tx-in/spending-reference-tx-in-datum';
+import { SpendingReferenceTxInRedeemerBuilder } from '../../../../../src/command/buildParameters/tx-in/spending-reference-tx-in-redeemer';
+import { TxInSpending } from '../../../../../src/command/buildParameters/tx-in/tx-in-spending';
 
 describe('tx-in-spending', () => {
   /* 

@@ -1,7 +1,7 @@
 import {
   SpendingReferenceTxInDatum,
   SpendingReferenceTxInDatumBuilder,
-} from '../../../../src/command/buildParameters/spending-reference-tx-in-datum';
+} from '../../../../../src/command/buildParameters/tx-in/spending-reference-tx-in-datum';
 
 describe('spending-reference-tx-in-datum', () => {
   /* 

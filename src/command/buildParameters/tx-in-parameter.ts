@@ -1,5 +1,5 @@
 import { Builder, CompositeCommandParameter, StringCommandParameter } from '@zodimo/cardano-cli-base';
-import { TxInAlternative, TxInAlternativeBuilder } from './tx-in-alternative';
+import { TxInAlternative, TxInAlternativeBuilder } from './tx-in/tx-in-alternative';
 
 export class TxInParameterBuilder {
   withTxIn(value: string): TxInParameter {

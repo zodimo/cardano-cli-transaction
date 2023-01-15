@@ -1,7 +1,7 @@
-import { TxInParameter } from '../../../../src/command/buildParameters/tx-in-parameter';
-import { TxInScript } from '../../../../src/command/buildParameters/tx-in-script';
-import { TxInScriptDatumBuilder } from '../../../../src/command/buildParameters/tx-in-script-datum';
-import { TxInScriptRedeemerBuilder } from '../../../../src/command/buildParameters/tx-in-script-redeemer';
+import { TxInParameter } from '../../../../../src/command/buildParameters/tx-in-parameter';
+import { TxInScript } from '../../../../../src/command/buildParameters/tx-in/tx-in-script';
+import { TxInScriptDatumBuilder } from '../../../../../src/command/buildParameters/tx-in/tx-in-script-datum';
+import { TxInScriptRedeemerBuilder } from '../../../../../src/command/buildParameters/tx-in/tx-in-script-redeemer';
 
 describe('tx-in-script', () => {
   /*

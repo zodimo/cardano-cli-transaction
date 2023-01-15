@@ -1,7 +1,7 @@
 import {
   SpendingReferenceTxInRedeemer,
   SpendingReferenceTxInRedeemerBuilder,
-} from '../../../../src/command/buildParameters/spending-reference-tx-in-redeemer';
+} from '../../../../../src/command/buildParameters/tx-in/spending-reference-tx-in-redeemer';
 
 describe('spending-reference-tx-in-redeemer', () => {
   /* 

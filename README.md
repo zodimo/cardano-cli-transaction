@@ -47,5 +47,5 @@ Usage: cardano-cli transaction
   - [x] calculate-min-fee
   - [ ] calculate-min-required-utxo
   - [ ] hash-script-data
-  - [ ] txid
+  - [x] txid
   - [ ] view

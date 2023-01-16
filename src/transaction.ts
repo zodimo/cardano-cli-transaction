@@ -1,5 +1,6 @@
 import { Builder } from '@zodimo/cardano-cli-base';
 import { Build, BuildOptions } from './command/build';
+import { CalculateMinFee, CalculateMinFeeOptions } from './command/calculate-min-fee';
 import { PolicyId, PolicyIdOptions } from './command/policy-id';
 import { Sign, SignOptions } from './command/sign';
 import { Submit, SubmitOptions } from './command/submit';
@@ -72,10 +73,22 @@ export class Transaction {
     const options = value(new PolicyIdOptions());
     return this.policyId(options);
   }
+
   // calculate-min-fee
-  calculateMinFee() {
-    throw new Error('Not yet implemented!');
+
+  calculateMinFee(builder: Builder<CalculateMinFeeOptions, CalculateMinFeeOptions>): CalculateMinFee;
+  calculateMinFee(options: CalculateMinFeeOptions): CalculateMinFee;
+  calculateMinFee(
+    value: CalculateMinFeeOptions | Builder<CalculateMinFeeOptions, CalculateMinFeeOptions>,
+  ): CalculateMinFee {
+    if (typeof value !== 'function') {
+      return new CalculateMinFee(this.commandPrefix, value);
+    }
+
+    const options = value(new CalculateMinFeeOptions());
+    return this.calculateMinFee(options);
   }
+
   // calculate-min-required-utxo
   calculateMinRequiredUtxo() {
     throw new Error('Not yet implemented!');

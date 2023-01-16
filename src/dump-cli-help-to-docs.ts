@@ -26,6 +26,7 @@ class DumpRawHelpDocs {
       .set(...this.createDocFileForCommands('transaction', 'assemble'))
       .set(...this.createDocFileForCommands('transaction', 'submit'))
       .set(...this.createDocFileForCommands('transaction', 'policyid'))
+      .set(...this.createDocFileForCommands('transaction', 'calculate-min-fee'))
       .set(...this.createDocFileForCommands('transaction', 'calculate-min-required-utxo'))
       .set(...this.createDocFileForCommands('transaction', 'hash-script-data'))
       .set(...this.createDocFileForCommands('transaction', 'txid'))

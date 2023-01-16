@@ -44,7 +44,7 @@ Usage: cardano-cli transaction
   - [ ] assemble
   - [x] submit
   - [x] policyid
-  - [ ] calculate-min-fee
+  - [x] calculate-min-fee
   - [ ] calculate-min-required-utxo
   - [ ] hash-script-data
   - [ ] txid

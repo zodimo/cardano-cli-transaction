@@ -3,6 +3,7 @@ import { SignOptions } from '../src/command/sign';
 import { SubmitOptions } from '../src/command/submit';
 import { Transaction } from '../src/transaction';
 import { PolicyIdOptions } from '../src/command/policy-id';
+import { CalculateMinFeeOptions } from '../src/command/calculate-min-fee';
 
 describe('cardano-cli transaction', () => {
   it('default commandPrefix', () => {
@@ -17,7 +18,7 @@ describe('cardano-cli transaction', () => {
     Transaction.createWithCardanoCliBin().sign((builder) => {
       expect(builder).toBeInstanceOf(SignOptions);
       //return is not important
-      return builder.withOutFile((b) => b.createForFile(''));
+      return builder.withOutFile((b) => b.createForFile('not-important'));
     });
   });
 
@@ -25,7 +26,7 @@ describe('cardano-cli transaction', () => {
     Transaction.createWithCardanoCliBin().submit((builder) => {
       expect(builder).toBeInstanceOf(SubmitOptions);
       //return is not important
-      return builder.withTxFile('');
+      return builder.withTxFile('not-important');
     });
   });
 
@@ -33,7 +34,7 @@ describe('cardano-cli transaction', () => {
     Transaction.createWithCardanoCliBin().build((builder) => {
       expect(builder).toBeInstanceOf(BuildOptions);
       //return is not important
-      return builder.withTxIn((b) => b.withTxIn(''));
+      return builder.withTxIn((b) => b.withTxIn('not-important'));
     });
   });
 
@@ -42,6 +43,14 @@ describe('cardano-cli transaction', () => {
       expect(builder).toBeInstanceOf(PolicyIdOptions);
       //return is not important
       return builder.withScriptFile('not-important');
+    });
+  });
+
+  it('calculate-min-fee', () => {
+    Transaction.createWithCardanoCliBin().calculateMinFee((builder) => {
+      expect(builder).toBeInstanceOf(CalculateMinFeeOptions);
+      //return is not important
+      return builder.withTxBodyFile('not-important');
     });
   });
 });

@@ -4,6 +4,7 @@ import { SubmitOptions } from '../src/command/submit';
 import { Transaction } from '../src/transaction';
 import { PolicyIdOptions } from '../src/command/policy-id';
 import { CalculateMinFeeOptions } from '../src/command/calculate-min-fee';
+import { TxIdOptions } from '../src/command/tx-id';
 
 describe('cardano-cli transaction', () => {
   it('default commandPrefix', () => {
@@ -51,6 +52,14 @@ describe('cardano-cli transaction', () => {
       expect(builder).toBeInstanceOf(CalculateMinFeeOptions);
       //return is not important
       return builder.withTxBodyFile('not-important');
+    });
+  });
+
+  it('txid', () => {
+    Transaction.createWithCardanoCliBin().txId((builder) => {
+      expect(builder).toBeInstanceOf(TxIdOptions);
+      //return is not important
+      return builder.withTx((b) => b);
     });
   });
 });

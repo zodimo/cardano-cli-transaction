@@ -4,6 +4,7 @@ import { CalculateMinFee, CalculateMinFeeOptions } from './command/calculate-min
 import { PolicyId, PolicyIdOptions } from './command/policy-id';
 import { Sign, SignOptions } from './command/sign';
 import { Submit, SubmitOptions } from './command/submit';
+import { TxId, TxIdOptions } from './command/tx-id';
 
 export class Transaction {
   public readonly commandPrefix: string;
@@ -97,9 +98,18 @@ export class Transaction {
   hashScriptData() {
     throw new Error('Not yet implemented!');
   }
+
   // txid
-  txid() {
-    throw new Error('Not yet implemented!');
+
+  txId(builder: Builder<TxIdOptions, TxIdOptions>): TxId;
+  txId(options: TxIdOptions): TxId;
+  txId(value: TxIdOptions | Builder<TxIdOptions, TxIdOptions>): TxId {
+    if (typeof value !== 'function') {
+      return new TxId(this.commandPrefix, value);
+    }
+
+    const options = value(new TxIdOptions());
+    return this.txId(options);
   }
   // view
   view() {

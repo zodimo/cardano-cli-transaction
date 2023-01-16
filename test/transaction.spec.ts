@@ -59,7 +59,7 @@ describe('cardano-cli transaction', () => {
     Transaction.createWithCardanoCliBin().txId((builder) => {
       expect(builder).toBeInstanceOf(TxIdOptions);
       //return is not important
-      return builder.withTx((b) => b);
+      return builder.withTx((b) => b.txBodyFile('not-important'));
     });
   });
 });

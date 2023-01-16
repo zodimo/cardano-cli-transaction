@@ -43,7 +43,7 @@ Usage: cardano-cli transaction
   - [ ] witness
   - [ ] assemble
   - [x] submit
-  - [ ] policyid
+  - [x] policyid
   - [ ] calculate-min-fee
   - [ ] calculate-min-required-utxo
   - [ ] hash-script-data

@@ -4,7 +4,10 @@ import {
   CompositeCommandParameter,
   StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
-import { CertificateReferenceTxInRedeemerBuilder } from './certificate-reference-tx-in-redeemer';
+import {
+  CertificateReferenceTxInRedeemer,
+  CertificateReferenceTxInRedeemerBuilder,
+} from './certificate-reference-tx-in-redeemer';
 export class CertificateTxInReferenceBuilder {
   withTxInReference(value: string): CertificateTxInReference {
     return CertificateTxInReference.fromTxInReference(value);
@@ -22,7 +25,7 @@ export class CertificateTxInReference extends CompositeCommandParameter {
   withRedeemer(
     builder: Builder<CertificateReferenceTxInRedeemerBuilder, CertificateReferenceTxInRedeemer>,
   ): CertificateTxInReference {
-    this.withParameter(StringCommandParameter.from(builder(new CertificateReferenceTxInRedeemerBuilder())));
+    this.withParameter(builder(new CertificateReferenceTxInRedeemerBuilder()));
     return this;
   }
 }

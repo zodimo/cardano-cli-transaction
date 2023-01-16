@@ -6,6 +6,7 @@ import { RequiredSignerBuilder } from '../../../src/command/buildParameters/requ
 import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-out-parameter';
 import { MintParameterBuilder } from '../../../src/command/buildParameters/mint-parameter';
 import { CertificateFileBuilder } from '../../../src/command/buildParameters/certificate-file';
+import { WithdrawalParameterBuilder } from '../../../src/command/buildParameters/withdrawal.parameter';
 
 describe('build-options', () => {
   /*
@@ -243,6 +244,14 @@ describe('build-options', () => {
       expect(builder).toBeInstanceOf(CertificateFileBuilder);
       //return it not tested
       return builder.withCertificateFile('not-important');
+    });
+  });
+
+  it('withdrawal', () => {
+    new BuildOptions().withWithdrawal((builder) => {
+      expect(builder).toBeInstanceOf(WithdrawalParameterBuilder);
+      //return it not tested
+      return builder.withWithdrawal('not-important');
     });
   });
 });

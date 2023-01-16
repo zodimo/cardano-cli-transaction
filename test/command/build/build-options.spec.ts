@@ -130,6 +130,8 @@ describe('build-options', () => {
       //return it not tested
       return builder.babbage;
     });
+
+    expect(new BuildOptions().withEra((b) => b.babbage).toString()).toBe('--babbage-era');
   });
 
   it('node-mode', () => {
@@ -138,6 +140,7 @@ describe('build-options', () => {
       //return it not tested
       return builder.cardano();
     });
+    expect(new BuildOptions().withNodeMode((b) => b.cardano()).toString()).toBe('--cardano-mode');
   });
   it('network', () => {
     new BuildOptions().withNetwork((builder) => {
@@ -145,6 +148,7 @@ describe('build-options', () => {
       //return it not tested
       return builder.mainnet();
     });
+    expect(new BuildOptions().withNetwork((b) => b.mainnet()).toString()).toBe('--mainnet');
   });
 
   it('script-valid', () => {
@@ -154,6 +158,8 @@ describe('build-options', () => {
       //return it not tested
       return builder.isValid();
     });
+
+    expect(new BuildOptions().withScriptValid((b) => b.isInvalid()).toString()).toBe('--script-invalid');
   });
 
   it('witness-override', () => {
@@ -169,6 +175,7 @@ describe('build-options', () => {
       //return it not tested
       return builder.withTxIn('not tested');
     });
+    expect(new BuildOptions().withTxIn((b) => b.withTxIn('123')).toString()).toBe('--tx-in 123');
   });
 
   it('read-only-tx-in-reference', () => {
@@ -185,6 +192,9 @@ describe('build-options', () => {
       //return it not tested
       return builder.hash('not-important');
     });
+    expect(new BuildOptions().withRequiredSigner((b) => b.file('some-file')).toString()).toBe(
+      '--required-signer some-file',
+    );
   });
 
   it('tx-in-collateral TX-IN', () => {
@@ -214,6 +224,8 @@ describe('build-options', () => {
       //return it not tested
       return builder.withTxOut('not-important');
     });
+
+    expect(new BuildOptions().withTxOut((b) => b.withTxOut('123')).toString()).toBe(`--tx-out 123`);
   });
 
   it('change-address ADDRESS', () => {
@@ -227,6 +239,7 @@ describe('build-options', () => {
       //return it not tested
       return builder.withMint('not-important');
     });
+    expect(new BuildOptions().withMint((b) => b.withMint('123')).toString()).toBe(`--mint 123`);
   });
 
   it('invalid-before SLOT', () => {
@@ -248,6 +261,9 @@ describe('build-options', () => {
       //return it not tested
       return builder.withCertificateFile('not-important');
     });
+    expect(new BuildOptions().withCertificateFile((b) => b.withCertificateFile('cert-file')).toString()).toBe(
+      `--certificate-file cert-file`,
+    );
   });
 
   it('withdrawal', () => {
@@ -256,6 +272,9 @@ describe('build-options', () => {
       //return it not tested
       return builder.withWithdrawal('not-important');
     });
+    expect(new BuildOptions().withWithdrawal((b) => b.withWithdrawal('withdrawal')).toString()).toBe(
+      `--withdrawal withdrawal`,
+    );
   });
 
   it('json-metadata', () => {
@@ -264,6 +283,7 @@ describe('build-options', () => {
       //return it not tested
       return builder.noSchema();
     });
+    expect(new BuildOptions().withJsonMetadata((b) => b.noSchema()).toString()).toBe(`--json-metadata-no-schema`);
   });
 
   it('auxiliary-script-file', () => {
@@ -278,6 +298,9 @@ describe('build-options', () => {
       //return it not tested
       return builder.jsonFile('not-important');
     });
+    expect(new BuildOptions().withMetadata((b) => b.cborFile('some-cbor-file')).toString()).toBe(
+      `--metadata-cbor-file some-cbor-file`,
+    );
   });
 
   it('protocol-params-file', () => {
@@ -300,5 +323,8 @@ describe('build-options', () => {
       //return it not tested
       return builder.outFile('not-important');
     });
+    expect(new BuildOptions().withOutput((b) => b.outFile('some-out-file')).toString()).toBe(
+      `--out-file some-out-file`,
+    );
   });
 });

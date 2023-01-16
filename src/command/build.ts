@@ -269,6 +269,9 @@ export class BuildOptions implements CommandOptions {
     if (this.network) {
       output.push(this.network.toString());
     }
+    if (this.scriptValid) {
+      output.push(this.scriptValid.toString());
+    }
     if (this.witnessOverride) {
       output.push(this.witnessOverride.toString());
     }
@@ -278,6 +281,10 @@ export class BuildOptions implements CommandOptions {
     if (this.readOnlyTxInReference) {
       output.push(this.readOnlyTxInReference.toString());
     }
+    if (this.requiredSigner) {
+      output.push(this.requiredSigner.toString());
+    }
+
     if (this.txInCollateral) {
       output.push(this.txInCollateral.toString());
     }

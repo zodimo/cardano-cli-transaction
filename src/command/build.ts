@@ -41,6 +41,7 @@ export class BuildOptions implements CommandOptions {
   private certificateFile?: CertificateFile;
   private withdrawals: WithdrawalParameter[];
   private jsonMetaData?: JsonMetaData;
+  private auxiliaryScriptFile?: StringCommandParameter;
   private output?: BuildOutput;
 
   constructor() {
@@ -221,6 +222,11 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withAuxiliaryScriptFile(value: string): BuildOptions {
+    this.auxiliaryScriptFile = StringCommandParameter.from('auxiliary-script-file', value);
+    return this;
+  }
+
   toString(): string {
     const output: string[] = [];
     if (this.era) {
@@ -275,6 +281,9 @@ export class BuildOptions implements CommandOptions {
 
     if (this.jsonMetaData) {
       output.push(this.jsonMetaData.toString());
+    }
+    if (this.auxiliaryScriptFile) {
+      output.push(this.auxiliaryScriptFile.toString());
     }
 
     if (this.output) {

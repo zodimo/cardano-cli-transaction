@@ -263,4 +263,11 @@ describe('build-options', () => {
       return builder.noSchema();
     });
   });
+
+  it('auxiliary-script-file', () => {
+    const auxiliaryScriptFile = 'some-aux-script-file';
+    expect(new BuildOptions().withAuxiliaryScriptFile(auxiliaryScriptFile).toString()).toBe(
+      `--auxiliary-script-file ${auxiliaryScriptFile}`,
+    );
+  });
 });

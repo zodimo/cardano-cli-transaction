@@ -1,5 +1,6 @@
 import { Builder } from '@zodimo/cardano-cli-base';
 import { Build, BuildOptions } from './command/build';
+import { PolicyId, PolicyIdOptions } from './command/policy-id';
 import { Sign, SignOptions } from './command/sign';
 import { Submit, SubmitOptions } from './command/submit';
 
@@ -58,9 +59,18 @@ export class Transaction {
     const options = value(new SubmitOptions());
     return this.submit(options);
   }
+
   // policyid
-  policyid() {
-    throw new Error('Not yet implemented!');
+
+  policyId(builder: Builder<PolicyIdOptions, PolicyIdOptions>): PolicyId;
+  policyId(options: PolicyIdOptions): PolicyId;
+  policyId(value: PolicyIdOptions | Builder<PolicyIdOptions, PolicyIdOptions>): PolicyId {
+    if (typeof value !== 'function') {
+      return new PolicyId(this.commandPrefix, value);
+    }
+
+    const options = value(new PolicyIdOptions());
+    return this.policyId(options);
   }
   // calculate-min-fee
   calculateMinFee() {

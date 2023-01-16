@@ -2,6 +2,7 @@ import { BuildOptions } from '../src/command/build';
 import { SignOptions } from '../src/command/sign';
 import { SubmitOptions } from '../src/command/submit';
 import { Transaction } from '../src/transaction';
+import { PolicyIdOptions } from '../src/command/policy-id';
 
 describe('cardano-cli transaction', () => {
   it('default commandPrefix', () => {
@@ -33,6 +34,14 @@ describe('cardano-cli transaction', () => {
       expect(builder).toBeInstanceOf(BuildOptions);
       //return is not important
       return builder.withTxIn((b) => b.withTxIn(''));
+    });
+  });
+
+  it('policyid', () => {
+    Transaction.createWithCardanoCliBin().policyId((builder) => {
+      expect(builder).toBeInstanceOf(PolicyIdOptions);
+      //return is not important
+      return builder.withScriptFile('not-important');
     });
   });
 });

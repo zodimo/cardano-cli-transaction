@@ -37,9 +37,13 @@ export class TxToSign extends StringCommandParameter {
 }
 export class SignOptions implements CommandOptions {
   private txToSign?: TxToSign;
-  private signingKeyFile?: CompositeCommandParameter;
+  private signingKeyFiles: CompositeCommandParameter[];
   private network?: Network;
   private outFile?: OutFile;
+
+  constructor() {
+    this.signingKeyFiles = [];
+  }
 
   withTxToSign(builder: Builder<TxToSignBuilder, TxToSign>): SignOptions;
   withTxToSign(value: TxToSign): SignOptions;
@@ -54,9 +58,8 @@ export class SignOptions implements CommandOptions {
 
   withSigningKeyFile(file: string, address?: string): SignOptions {
     const maybeAddress = MaybeCommandParameterFactory.maybeString('address', address);
-    this.signingKeyFile = CompositeCommandParameter.from(
-      StringCommandParameter.from('signing-key-file', file),
-      maybeAddress,
+    this.signingKeyFiles.push(
+      CompositeCommandParameter.from(StringCommandParameter.from('signing-key-file', file), maybeAddress),
     );
     return this;
   }
@@ -90,9 +93,8 @@ export class SignOptions implements CommandOptions {
     if (this.txToSign) {
       output.push(this.txToSign.toString());
     }
-    if (this.signingKeyFile) {
-      output.push(this.signingKeyFile.toString());
-    }
+    this.signingKeyFiles.forEach((signingKeyFile) => output.push(signingKeyFile.toString()));
+
     if (this.network) {
       output.push(this.network.toString());
     }

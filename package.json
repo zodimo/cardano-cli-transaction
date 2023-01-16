@@ -1,6 +1,6 @@
 {
   "name": "@zodimo/cardano-cli-transaction",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "cardano-cli transaction wrapper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

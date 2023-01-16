@@ -13,6 +13,7 @@ import {
 } from '@zodimo/cardano-cli-base';
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
 import { CertificateFile, CertificateFileBuilder } from './buildParameters/certificate-file';
+import { JsonMetaData, JsonMetaDataBuilder } from './buildParameters/json-metadata';
 import { MintParameter, MintParameterBuilder } from './buildParameters/mint-parameter';
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
@@ -39,7 +40,7 @@ export class BuildOptions implements CommandOptions {
   private invalidHereafter?: NumericCommandParameter;
   private certificateFile?: CertificateFile;
   private withdrawals: WithdrawalParameter[];
-
+  private jsonMetaData?: JsonMetaData;
   private output?: BuildOutput;
 
   constructor() {
@@ -215,6 +216,11 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withJsonMetaData(builder: Builder<JsonMetaDataBuilder, JsonMetaData>): BuildOptions {
+    this.jsonMetaData = builder(new JsonMetaDataBuilder());
+    return this;
+  }
+
   toString(): string {
     const output: string[] = [];
     if (this.era) {
@@ -266,6 +272,10 @@ export class BuildOptions implements CommandOptions {
     }
 
     this.withdrawals.forEach((withdrawalParameter) => output.push(withdrawalParameter.toString()));
+
+    if (this.jsonMetaData) {
+      output.push(this.jsonMetaData.toString());
+    }
 
     if (this.output) {
       output.push(this.output.toString());

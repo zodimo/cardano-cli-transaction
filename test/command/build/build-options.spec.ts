@@ -7,6 +7,7 @@ import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-o
 import { MintParameterBuilder } from '../../../src/command/buildParameters/mint-parameter';
 import { CertificateFileBuilder } from '../../../src/command/buildParameters/certificate-file';
 import { WithdrawalParameterBuilder } from '../../../src/command/buildParameters/withdrawal-parameter';
+import { JsonMetaDataBuilder } from '../../../src/command/buildParameters/json-metadata';
 
 describe('build-options', () => {
   /*
@@ -252,6 +253,14 @@ describe('build-options', () => {
       expect(builder).toBeInstanceOf(WithdrawalParameterBuilder);
       //return it not tested
       return builder.withWithdrawal('not-important');
+    });
+  });
+
+  it('json-metadata', () => {
+    new BuildOptions().withJsonMetaData((builder) => {
+      expect(builder).toBeInstanceOf(JsonMetaDataBuilder);
+      //return it not tested
+      return builder.noSchema();
     });
   });
 });

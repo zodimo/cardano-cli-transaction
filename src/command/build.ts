@@ -45,6 +45,7 @@ export class BuildOptions implements CommandOptions {
   private auxiliaryScriptFile?: StringCommandParameter;
   private metadata?: Metadata;
   private protocolParamsFile?: StringCommandParameter;
+  private updateProposalFile?: StringCommandParameter;
   private output?: BuildOutput;
 
   constructor() {
@@ -240,6 +241,11 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withUpdateProposalFile(value: string): BuildOptions {
+    this.updateProposalFile = StringCommandParameter.from('update-proposal-file', value);
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -317,6 +323,10 @@ export class BuildOptions implements CommandOptions {
 
     if (this.protocolParamsFile) {
       output.push(this.protocolParamsFile.toString());
+    }
+
+    if (this.updateProposalFile) {
+      output.push(this.updateProposalFile.toString());
     }
 
     if (this.output) {

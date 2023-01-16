@@ -285,4 +285,11 @@ describe('build-options', () => {
       `--protocol-params-file ${protocolParamsFile}`,
     );
   });
+
+  it('update-proposal-file', () => {
+    const updateProposalFile = 'some-proposal-file';
+    expect(new BuildOptions().withUpdateProposalFile(updateProposalFile).toString()).toBe(
+      `--update-proposal-file ${updateProposalFile}`,
+    );
+  });
 });

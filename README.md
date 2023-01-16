@@ -38,7 +38,7 @@ Usage: cardano-cli transaction
 
 - [ ] transaction
   - [ ] build-raw
-  - [ ] build
+  - [x] build
   - [x] sign
   - [ ] witness
   - [ ] assemble

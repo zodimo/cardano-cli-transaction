@@ -1,5 +1,5 @@
 import { BuildOutput, BuildOutputBuilder } from '../../../../src/command/buildParameters/build-output';
-describe('transaction build outputs', () => {
+describe('build-output', () => {
   //(--out-file FILE | --calculate-plutus-script-cost FILE)
   it('out-file', () => {
     expect(BuildOutput.outFile('my-file').toString()).toBe(`--out-file my-file`);

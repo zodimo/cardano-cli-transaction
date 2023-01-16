@@ -9,6 +9,7 @@ import { CertificateFileBuilder } from '../../../src/command/buildParameters/cer
 import { WithdrawalParameterBuilder } from '../../../src/command/buildParameters/withdrawal-parameter';
 import { JsonMetadataBuilder } from '../../../src/command/buildParameters/json-metadata';
 import { MetadataBuilder } from '../../../src/command/buildParameters/metadata';
+import { BuildOutputBuilder } from '../../../src/command/buildParameters/build-output';
 
 describe('build-options', () => {
   /*
@@ -291,5 +292,13 @@ describe('build-options', () => {
     expect(new BuildOptions().withUpdateProposalFile(updateProposalFile).toString()).toBe(
       `--update-proposal-file ${updateProposalFile}`,
     );
+  });
+
+  it('build output', () => {
+    new BuildOptions().withOutput((builder) => {
+      expect(builder).toBeInstanceOf(BuildOutputBuilder);
+      //return it not tested
+      return builder.outFile('not-important');
+    });
   });
 });

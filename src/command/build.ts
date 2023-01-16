@@ -14,7 +14,7 @@ import {
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
 import { CertificateFile, CertificateFileBuilder } from './buildParameters/certificate-file';
 import { JsonMetadata, JsonMetadataBuilder } from './buildParameters/json-metadata';
-import { MetadataBuilder } from './buildParameters/metadata';
+import { Metadata, MetadataBuilder } from './buildParameters/metadata';
 import { MintParameter, MintParameterBuilder } from './buildParameters/mint-parameter';
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
@@ -44,6 +44,7 @@ export class BuildOptions implements CommandOptions {
   private jsonMetadata?: JsonMetadata;
   private auxiliaryScriptFile?: StringCommandParameter;
   private metadata?: Metadata;
+  private protocolParamsFile?: StringCommandParameter;
   private output?: BuildOutput;
 
   constructor() {
@@ -234,6 +235,11 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withProtocolParamsFile(value: string): BuildOptions {
+    this.protocolParamsFile = StringCommandParameter.from('protocol-params-file', value);
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -307,6 +313,10 @@ export class BuildOptions implements CommandOptions {
 
     if (this.metadata) {
       output.push(this.metadata.toString());
+    }
+
+    if (this.protocolParamsFile) {
+      output.push(this.protocolParamsFile.toString());
     }
 
     if (this.output) {

@@ -278,4 +278,11 @@ describe('build-options', () => {
       return builder.jsonFile('not-important');
     });
   });
+
+  it('protocol-params-file', () => {
+    const protocolParamsFile = 'some-aux-script-file';
+    expect(new BuildOptions().withProtocolParamsFile(protocolParamsFile).toString()).toBe(
+      `--protocol-params-file ${protocolParamsFile}`,
+    );
+  });
 });

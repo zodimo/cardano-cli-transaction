@@ -1,6 +1,7 @@
 import {
   Builder,
   Command,
+  CommandOptions,
   Network,
   NetworkBuilder,
   NodeMode,
@@ -8,7 +9,7 @@ import {
   StringCommandParameter,
 } from '@zodimo/cardano-cli-base';
 
-export class SubmitOptions {
+export class SubmitOptions implements CommandOptions {
   private nodeMode?: NodeMode;
   private network?: Network;
   private txFile?: StringCommandParameter;

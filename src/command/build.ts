@@ -18,6 +18,7 @@ import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/require
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
 import { TxInParameter, TxInParameterBuilder } from './buildParameters/tx-in-parameter';
 import { TxOutParameter, TxOutParameterBuilder } from './buildParameters/tx-out-parameter';
+import { WithdrawalParameter, WithdrawalParameterBuilder } from './buildParameters/withdrawal-parameter';
 
 export class BuildOptions implements CommandOptions {
   private era?: Era;
@@ -37,6 +38,7 @@ export class BuildOptions implements CommandOptions {
   private invalidBefore?: NumericCommandParameter;
   private invalidHereafter?: NumericCommandParameter;
   private certificateFile?: CertificateFile;
+  private withdrawals: WithdrawalParameter[];
 
   private output?: BuildOutput;
 
@@ -44,6 +46,7 @@ export class BuildOptions implements CommandOptions {
     this.txIns = [];
     this.txOuts = [];
     this.mints = [];
+    this.withdrawals = [];
   }
 
   withEra(builder: Builder<EraBuilder, Era>): BuildOptions;
@@ -189,6 +192,17 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withWithdrawal(builder: Builder<WithdrawalParameterBuilder, WithdrawalParameter>): BuildOptions;
+  withWithdrawal(value: WithdrawalParameter): BuildOptions;
+  withWithdrawal(value: WithdrawalParameter | Builder<WithdrawalParameterBuilder, WithdrawalParameter>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.withdrawals.push(value);
+      return this;
+    }
+    this.withdrawals.push(value(new WithdrawalParameterBuilder()));
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -250,6 +264,8 @@ export class BuildOptions implements CommandOptions {
     if (this.certificateFile) {
       output.push(this.certificateFile.toString());
     }
+
+    this.withdrawals.forEach((withdrawalParameter) => output.push(withdrawalParameter.toString()));
 
     if (this.output) {
       output.push(this.output.toString());

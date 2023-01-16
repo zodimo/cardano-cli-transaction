@@ -1,18 +1,18 @@
 import { BooleanCommandParameter } from '@zodimo/cardano-cli-base';
 
-export class JsonMetaDataBuilder {
-  noSchema(): JsonMetaData {
-    return JsonMetaData.noSchema();
+export class JsonMetadataBuilder {
+  noSchema(): JsonMetadata {
+    return JsonMetadata.noSchema();
   }
-  detailedSchema(): JsonMetaData {
-    return JsonMetaData.detailedSchema();
+  detailedSchema(): JsonMetadata {
+    return JsonMetadata.detailedSchema();
   }
 }
-export class JsonMetaData extends BooleanCommandParameter {
-  static noSchema(): JsonMetaData {
-    return JsonMetaData.from('json-metadata-no-schema');
+export class JsonMetadata extends BooleanCommandParameter {
+  static noSchema(): JsonMetadata {
+    return JsonMetadata.from('json-metadata-no-schema');
   }
-  static detailedSchema(): JsonMetaData {
-    return JsonMetaData.from('json-metadata-detailed-schema');
+  static detailedSchema(): JsonMetadata {
+    return JsonMetadata.from('json-metadata-detailed-schema');
   }
 }

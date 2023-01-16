@@ -7,7 +7,8 @@ import { TxOutParameterBuilder } from '../../../src/command/buildParameters/tx-o
 import { MintParameterBuilder } from '../../../src/command/buildParameters/mint-parameter';
 import { CertificateFileBuilder } from '../../../src/command/buildParameters/certificate-file';
 import { WithdrawalParameterBuilder } from '../../../src/command/buildParameters/withdrawal-parameter';
-import { JsonMetaDataBuilder } from '../../../src/command/buildParameters/json-metadata';
+import { JsonMetadataBuilder } from '../../../src/command/buildParameters/json-metadata';
+import { MetadataBuilder } from '../../../src/command/buildParameters/metadata';
 
 describe('build-options', () => {
   /*
@@ -257,8 +258,8 @@ describe('build-options', () => {
   });
 
   it('json-metadata', () => {
-    new BuildOptions().withJsonMetaData((builder) => {
-      expect(builder).toBeInstanceOf(JsonMetaDataBuilder);
+    new BuildOptions().withJsonMetadata((builder) => {
+      expect(builder).toBeInstanceOf(JsonMetadataBuilder);
       //return it not tested
       return builder.noSchema();
     });
@@ -269,5 +270,12 @@ describe('build-options', () => {
     expect(new BuildOptions().withAuxiliaryScriptFile(auxiliaryScriptFile).toString()).toBe(
       `--auxiliary-script-file ${auxiliaryScriptFile}`,
     );
+  });
+  it('metadata', () => {
+    new BuildOptions().withMetadata((builder) => {
+      expect(builder).toBeInstanceOf(MetadataBuilder);
+      //return it not tested
+      return builder.jsonFile('not-important');
+    });
   });
 });

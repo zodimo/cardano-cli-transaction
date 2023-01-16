@@ -13,7 +13,8 @@ import {
 } from '@zodimo/cardano-cli-base';
 import { BuildOutput, BuildOutputBuilder } from './buildParameters/build-output';
 import { CertificateFile, CertificateFileBuilder } from './buildParameters/certificate-file';
-import { JsonMetaData, JsonMetaDataBuilder } from './buildParameters/json-metadata';
+import { JsonMetadata, JsonMetadataBuilder } from './buildParameters/json-metadata';
+import { MetadataBuilder } from './buildParameters/metadata';
 import { MintParameter, MintParameterBuilder } from './buildParameters/mint-parameter';
 import { RequiredSigner, RequiredSignerBuilder } from './buildParameters/required-signer';
 import { ScriptValid, ScriptValidBuilder } from './buildParameters/script-valid';
@@ -40,8 +41,9 @@ export class BuildOptions implements CommandOptions {
   private invalidHereafter?: NumericCommandParameter;
   private certificateFile?: CertificateFile;
   private withdrawals: WithdrawalParameter[];
-  private jsonMetaData?: JsonMetaData;
+  private jsonMetadata?: JsonMetadata;
   private auxiliaryScriptFile?: StringCommandParameter;
+  private metadata?: Metadata;
   private output?: BuildOutput;
 
   constructor() {
@@ -205,6 +207,33 @@ export class BuildOptions implements CommandOptions {
     return this;
   }
 
+  withJsonMetadata(builder: Builder<JsonMetadataBuilder, JsonMetadata>): BuildOptions;
+  withJsonMetadata(value: JsonMetadata): BuildOptions;
+  withJsonMetadata(value: JsonMetadata | Builder<JsonMetadataBuilder, JsonMetadata>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.jsonMetadata = value;
+      return this;
+    }
+    this.jsonMetadata = value(new JsonMetadataBuilder());
+    return this;
+  }
+
+  withAuxiliaryScriptFile(value: string): BuildOptions {
+    this.auxiliaryScriptFile = StringCommandParameter.from('auxiliary-script-file', value);
+    return this;
+  }
+
+  withMetadata(builder: Builder<MetadataBuilder, Metadata>): BuildOptions;
+  withMetadata(value: Metadata): BuildOptions;
+  withMetadata(value: Metadata | Builder<MetadataBuilder, Metadata>): BuildOptions {
+    if (typeof value !== 'function') {
+      this.metadata = value;
+      return this;
+    }
+    this.metadata = value(new MetadataBuilder());
+    return this;
+  }
+
   withOutput(builder: Builder<BuildOutputBuilder, BuildOutput>): BuildOptions;
   withOutput(value: BuildOutput): BuildOptions;
   withOutput(value: BuildOutput | Builder<BuildOutputBuilder, BuildOutput>): BuildOptions {
@@ -214,16 +243,6 @@ export class BuildOptions implements CommandOptions {
     }
 
     this.output = value(new BuildOutputBuilder());
-    return this;
-  }
-
-  withJsonMetaData(builder: Builder<JsonMetaDataBuilder, JsonMetaData>): BuildOptions {
-    this.jsonMetaData = builder(new JsonMetaDataBuilder());
-    return this;
-  }
-
-  withAuxiliaryScriptFile(value: string): BuildOptions {
-    this.auxiliaryScriptFile = StringCommandParameter.from('auxiliary-script-file', value);
     return this;
   }
 
@@ -279,11 +298,15 @@ export class BuildOptions implements CommandOptions {
 
     this.withdrawals.forEach((withdrawalParameter) => output.push(withdrawalParameter.toString()));
 
-    if (this.jsonMetaData) {
-      output.push(this.jsonMetaData.toString());
+    if (this.jsonMetadata) {
+      output.push(this.jsonMetadata.toString());
     }
     if (this.auxiliaryScriptFile) {
       output.push(this.auxiliaryScriptFile.toString());
+    }
+
+    if (this.metadata) {
+      output.push(this.metadata.toString());
     }
 
     if (this.output) {
